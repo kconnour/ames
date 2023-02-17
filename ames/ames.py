@@ -2,7 +2,7 @@ from h5py import File
 from netCDF4 import Dataset
 import numpy as np
 
-from radprop import get_particle_sizes, get_wavelengths, get_scattering_cross_section, get_extinction_cross_section
+from .radprop import get_particle_sizes, get_wavelengths, get_scattering_cross_section, get_extinction_cross_section
 
 
 def areo2ls(areo: np.ndarray) -> np.ndarray:
@@ -99,3 +99,7 @@ def compute_ice_optical_depth(simulation: Dataset, radprop: File, target_wavelen
         radprop_extinction_cross_section, radprop_particle_sizes, radprop_wavelengths, target_wavelength)
     pressure = compute_pressure(surface_pressure, ak, bk)
     return compute_optical_depth(pressure, scaled_optical_depth)
+
+
+def time2sol(time: np.ndarray) -> np.ndarray:
+    return np.mod(time, 668)
